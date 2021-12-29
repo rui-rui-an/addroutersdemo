@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from "axios";
 import '@/css/reset.css'
 require('./mock/index');
+import '@/permission' // permission control
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;

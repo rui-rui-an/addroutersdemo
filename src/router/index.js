@@ -1,30 +1,37 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Login from "../views/Login.vue";
+import Vue from "vue"
+import VueRouter from "vue-router"
+import Login from "../views/Login.vue"
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
-const routes = [
+const StaticRouterMap = [
   {
     path: "/",
-    name: "Home",
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: "Login",
     component: Login,
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/dashboard",
+    name: "Dashboard",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(/* webpackChunkName: "about" */ "../views/Dashboard.vue"),
   },
-];
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  }
+]
 
-const router = new VueRouter({
+export default new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
-  routes,
-});
-
-export default router;
+  scrollBehavior: () => ({ y: 0 }),
+  routes: StaticRouterMap,
+})

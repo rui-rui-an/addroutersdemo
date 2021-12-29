@@ -1,57 +1,60 @@
 // import { login, logout } from '@/api/login'
 // import { getInfo } from '@/api/user'
-// import { getToken, setToken, removeToken } from '@/utils/auth'
-// import { StaticRouterMap } from '@/router/index'
-// const user = {
-//   namespaced: true,
-//   state: {
-//     token: getToken(),
-//     name: '',
-//     avatar: '',
-//     roles: [],
-//     init: false, // 是否完成初始化 // 默认未完成
-//     RouterList: [] // 动态路由
-//   },
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import Vue from 'vue'
+import { StaticRouterMap } from '@/router/index'
+const user = {
+  namespaced: true,
+  state: {
+    token: getToken(),
+    name: '',
+    avatar: '',
+    roles: [],
+    init: false, // 是否完成初始化 // 默认未完成
+    RouterList: [] // 动态路由
+  },
 
-//   mutations: {
-//     SET_TOKEN: (state, token) => {
-//       state.token = token
-//     },
-//     SET_NAME: (state, name) => {
-//       state.name = name
-//     },
-//     SET_AVATAR: (state, avatar) => {
-//       state.avatar = avatar
-//     },
-//     SET_ROLES: (state, roles) => {
-//       state.roles = roles
-//     },
-//     set_router: (state, RouterList) => {
-//       state.RouterList = RouterList
-//     },
-//     set_init: (state, status) => {
-//       state.init = status
-//     }
-//   },
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+    // SET_NAME: (state, name) => {
+    //   state.name = name
+    // },
+    // SET_AVATAR: (state, avatar) => {
+    //   state.avatar = avatar
+    // },
+    // SET_ROLES: (state, roles) => {
+    //   state.roles = roles
+    // },
+    set_router: (state, RouterList) => {
+      state.RouterList = RouterList
+    },
+    // set_init: (state, status) => {
+    //   state.init = status
+    // }
+  },
 
-//   actions: {
-//     // 登录
-//     login({ commit }, userInfo) {
-//       const username = userInfo.username.trim()
-//       return new Promise((resolve, reject) => {
-//         login(username, userInfo.password)
-//           .then(response => {
-//             const data = response.data
-//             console.log('当前token', data.token)
-//             setToken(data.token)
-//             commit('SET_TOKEN', data.token)
-//             resolve()
-//           })
-//           .catch(error => {
-//             reject(error)
-//           })
-//       })
-//     },
+  actions: {
+    // 登录
+    login({ commit }, userInfo) {
+      // const username = userInfo.username.trim()
+      return new Promise((resolve, reject) => {
+        Vue.prototype.$axios("/user/login")
+          .then(response => {
+            // console.log(response);
+            const token = response.data.data.token
+            // console.log(response.data);
+            console.log('当前token', token)
+            setToken(token)
+            commit('SET_TOKEN', token)
+            resolve()
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
 
 //     // 获取用户信息
 //     GetInfo({ commit, state }) {
@@ -74,14 +77,14 @@
 //           })
 //       })
 //     },
-//     // 动态设置路由 此为设置设置途径
-//     setRouterList({ commit }, routerList) {
-//       commit('set_router', StaticRouterMap.concat(routerList)) // 进行路由拼接并存储
-//     },
-//     // 存储颗粒话权限
-//     setroles({ commit }, roleList) {
-//       commit('SET_ROLES', roleList)
-//     },
+    // 动态设置路由 此为设置设置途径
+    setRouterList({ commit }, routerList) {
+      commit('set_router', StaticRouterMap.concat(routerList)) // 进行路由拼接并存储
+    },
+    // 存储颗粒话权限
+    setroles({ commit }, roleList) {
+      commit('SET_ROLES', roleList)
+    },
 //     // 登出
 //     LogOut({ commit, state }) {
 //       return new Promise((resolve, reject) => {
@@ -108,7 +111,7 @@
 //         resolve()
 //       })
 //     }
-//   }
-// }
+  }
+}
 
-// export default user
+export default user

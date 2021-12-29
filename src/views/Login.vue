@@ -11,7 +11,7 @@
         <el-form-item label="账号" prop="pass">
           <el-input
             type="password"
-            v-model="ruleForm.account"
+            v-model="ruleForm.username"
             autocomplete="off"
           ></el-input>
         </el-form-item>
@@ -38,18 +38,19 @@ export default {
     return {
       ruleForm: {
         pass: "",
-        account: "",
+        username: "",
       },
     }
   },
   methods: {
     submitForm(formName) {
-      // this.$store.dispatch("user/login", this.ruleForm).then(() => {
+      this.$store.dispatch("user/login", this.ruleForm).then(() => {
+        this.$router.push({ path: "dashboard" })
+      })
+      // this.$axios("/user/login").then((res) => {
+      //   console.log(res)
       //   this.$router.push({ path: "home" })
       // })
-      this.$axios('/user/login').then((res)=>{
-        console.log(res);
-      })
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
