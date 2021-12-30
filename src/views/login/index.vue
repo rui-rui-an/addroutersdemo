@@ -45,7 +45,7 @@ export default {
   methods: {
     submitForm(formName) {
       this.$store.dispatch("user/login", this.ruleForm).then(() => {
-        this.$router.push({ path: "dashboard" })
+        this.$router.push({ path: "Layout" })
       })
       // this.$axios("/user/login").then((res) => {
       //   console.log(res)

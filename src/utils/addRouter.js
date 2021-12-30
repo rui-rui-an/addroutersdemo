@@ -7,7 +7,6 @@ export function addRouter(routerlist) {
   const router = []
   try {
     routerlist.forEach(e => {
-      console.log(e);
       let e_new = {
         path: e.url,
         name: e.name,

@@ -60,25 +60,25 @@ router.afterEach((to, from) => {
 });
 
 function gotoRouter(to, next) {
-  console.log(2222);
+  // console.log(2222);
   Vue.prototype.$axios.get('/user/userInfo',store.getters.token) // 获取动态路由的方法
     .then(res => {
-      console.log("解析后端动态路由", res);
+      // console.log("解析后端动态路由", res);
       const asyncRouter = addRouter(res.data.data.router); // 进行递归解析
       store.dispatch("user/setroles", res.data.data.permit);
-      console.log(asyncRouter);
+      // console.log(asyncRouter);
       return asyncRouter;
     })
     .then(asyncRouter => {
       // 后置添加404页面,防止刷新404
-      // asyncRouter.push({
-      //   path: "*",
-      //   redirect: "/404",
-      //   hidden: true
-      // });
-      // router.addRoutes(asyncRouter); // vue-router提供的addRouter方法进行路由拼接
+      asyncRouter.push({
+        path: "*",
+        redirect: "/404",
+        hidden: true
+      });
+      router.addRoutes(asyncRouter); // vue-router提供的addRouter方法进行路由拼接
       // console.log(asyncRouter);
-      // store.dispatch("user/setRouterList", asyncRouter); // 存储到vuex
+      store.dispatch("user/setRouterList", asyncRouter); // 存储到vuex
       // store.dispatch("user/GetInfo");
       // store.commit("user/set_init", true);
       next({ ...to, replace: true }); // hack方法 确保addRoutes已完成

@@ -2,7 +2,8 @@
 // import { getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import Vue from 'vue'
-import { StaticRouterMap } from '@/router/index'
+import { StaticRouterMap } from '@/router/index.js'
+console.log(StaticRouterMap);
 const user = {
   namespaced: true,
   state: {
@@ -24,9 +25,9 @@ const user = {
     // SET_AVATAR: (state, avatar) => {
     //   state.avatar = avatar
     // },
-    // SET_ROLES: (state, roles) => {
-    //   state.roles = roles
-    // },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    },
     set_router: (state, RouterList) => {
       state.RouterList = RouterList
     },
