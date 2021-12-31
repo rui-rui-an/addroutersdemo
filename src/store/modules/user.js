@@ -3,7 +3,7 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import Vue from 'vue'
 import { StaticRouterMap } from '@/router/index.js'
-console.log(StaticRouterMap);
+// console.log(StaticRouterMap);
 const user = {
   namespaced: true,
   state: {

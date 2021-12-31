@@ -31,13 +31,14 @@ router.beforeEach((to, from, next) => {
         // 获取了动态路由 data一定true,就无需再次请求 直接放行
         next();
       } else {
+        console.log(1111);
         // next('/dashboard');
         // data为false,一定没有获取动态路由,就跳转到获取动态路由的方法
         gotoRouter(to, next);
       }
     } else {
       Message({ message: "您已经登录", type: "info" });
-      next("/");
+      next();
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
@@ -60,13 +61,13 @@ router.afterEach((to, from) => {
 });
 
 function gotoRouter(to, next) {
-  // console.log(2222);
+  console.log(2222);
   Vue.prototype.$axios.get('/user/userInfo',store.getters.token) // 获取动态路由的方法
     .then(res => {
-      // console.log("解析后端动态路由", res);
+      console.log("解析后端动态路由", res);
       const asyncRouter = addRouter(res.data.data.router); // 进行递归解析
       store.dispatch("user/setroles", res.data.data.permit);
-      // console.log(asyncRouter);
+      console.log(asyncRouter);
       return asyncRouter;
     })
     .then(asyncRouter => {

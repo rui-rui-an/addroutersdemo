@@ -4,7 +4,7 @@ import Login from "../views/login"
 
 Vue.use(VueRouter)
 
-const StaticRouterMap = [
+export const StaticRouterMap= [
   {
     path: "/",
     redirect: "/login",
@@ -39,8 +39,19 @@ const StaticRouterMap = [
   },
 ]
 
-export default new VueRouter({
-  mode: "history",
-  scrollBehavior: () => ({ y: 0 }),
-  routes: StaticRouterMap,
-})
+// export default new VueRouter({
+//   mode: "history",
+//   scrollBehavior: () => ({ y: 0 }),
+//   routes: StaticRouterMap,
+// })
+
+const createRouter = () =>
+  new VueRouter({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: StaticRouterMap
+  });
+
+const router = createRouter();
+
+export default router;
