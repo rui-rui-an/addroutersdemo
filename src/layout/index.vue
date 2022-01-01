@@ -1,6 +1,8 @@
 <template>
   <div class="layout">
-    <div class="left">左侧导航</div>
+    <div class="left">
+      <leftNav></leftNav>
+    </div>
     <div class="right">
       <div class="top_right"></div>
       <div class="main">
@@ -11,7 +13,12 @@
 </template>
 
 <script>
-export default {}
+import leftNav from './leftNav'
+export default {
+  components:{
+    leftNav
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -21,7 +28,7 @@ export default {}
   display: flex;
   justify-content: flex-start;
   .left {
-    width: 200px;
+    width: 300px;
     height: 100%;
     background-color: #0094ff;
   }

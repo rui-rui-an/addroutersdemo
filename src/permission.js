@@ -26,19 +26,20 @@ router.beforeEach((to, from, next) => {
   // console.log(getToken());
   if (getToken()) {
     // 判断cookice是否存在 不存在即为未登录
+    // console.log(to);
     if (to.path !== "/login") {
       if (user.state.init) {
         // 获取了动态路由 data一定true,就无需再次请求 直接放行
         next();
       } else {
-        console.log(1111);
+        // console.log(1111);
         // next('/dashboard');
         // data为false,一定没有获取动态路由,就跳转到获取动态路由的方法
         gotoRouter(to, next);
       }
     } else {
       Message({ message: "您已经登录", type: "info" });
-      next();
+      next('/layout');
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
@@ -61,17 +62,18 @@ router.afterEach((to, from) => {
 });
 
 function gotoRouter(to, next) {
-  console.log(2222);
-  Vue.prototype.$axios.get('/user/userInfo',store.getters.token) // 获取动态路由的方法
+  Vue.prototype.$axios.get('/user/userRouter',store.getters.token) // 获取动态路由的方法
     .then(res => {
-      console.log("解析后端动态路由", res);
+      // console.log("解析后端动态路由", res);
       const asyncRouter = addRouter(res.data.data.router); // 进行递归解析
       store.dispatch("user/setroles", res.data.data.permit);
-      console.log(asyncRouter);
+      // console.log(asyncRouter);
+      console.log(11111111111);
       return asyncRouter;
     })
     .then(asyncRouter => {
       // 后置添加404页面,防止刷新404
+      console.log(222222222222222);
       asyncRouter.push({
         path: "*",
         redirect: "/404",
@@ -80,8 +82,8 @@ function gotoRouter(to, next) {
       router.addRoutes(asyncRouter); // vue-router提供的addRouter方法进行路由拼接
       // console.log(asyncRouter);
       store.dispatch("user/setRouterList", asyncRouter); // 存储到vuex
-      // store.dispatch("user/GetInfo");
-      // store.commit("user/set_init", true);
+      store.dispatch("user/GetInfo");
+      store.commit("user/set_init", true);
       next({ ...to, replace: true }); // hack方法 确保addRoutes已完成
     })
     .catch(e => {

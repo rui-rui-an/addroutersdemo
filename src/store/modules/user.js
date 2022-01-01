@@ -19,21 +19,21 @@ const user = {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    // SET_NAME: (state, name) => {
-    //   state.name = name
-    // },
-    // SET_AVATAR: (state, avatar) => {
-    //   state.avatar = avatar
-    // },
+    SET_NAME: (state, name) => {
+      state.name = name
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
+    },
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
     set_router: (state, RouterList) => {
       state.RouterList = RouterList
     },
-    // set_init: (state, status) => {
-    //   state.init = status
-    // }
+    set_init: (state, status) => {
+      state.init = status
+    }
   },
 
   actions: {
@@ -58,26 +58,28 @@ const user = {
     },
 
 //     // 获取用户信息
-//     GetInfo({ commit, state }) {
-//       return new Promise((resolve, reject) => {
-//         getInfo(state.token)
-//           .then(response => {
-//             const data = response.data
-//             if (data.roles && data.roles.length > 0) {
-//               // 验证返回的roles是否是一个非空数组
-//               // commit('SET_ROLES', data.roles)
-//             } else {
-//               reject('getInfo: roles must be a non-null array !')
-//             }
-//             commit('SET_NAME', data.name)
-//             commit('SET_AVATAR', data.avatar)
-//             resolve(response)
-//           })
-//           .catch(error => {
-//             reject(error)
-//           })
-//       })
-//     },
+    GetInfo({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        // getInfo(state.token)
+        Vue.prototype.$axios.get('/user/userInfo')
+          .then(response => {
+            console.log(response);
+            const data = response.data.data
+            if (data.roles && data.roles.length > 0) {
+              // 验证返回的roles是否是一个非空数组
+              commit('SET_ROLES', data.roles)
+            } else {
+              reject('getInfo: roles must be a non-null array !')
+            }
+            commit('SET_NAME', data.name)
+            commit('SET_AVATAR', data.avatar)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     // 动态设置路由 此为设置设置途径
     setRouterList({ commit }, routerList) {
       commit('set_router', StaticRouterMap.concat(routerList)) // 进行路由拼接并存储
