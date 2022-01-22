@@ -13,7 +13,7 @@
         </template>
         <el-menu-item-group>
           <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选555项1</el-menu-item>
+          <el-menu-item index="1-1">选566655项1</el-menu-item>
           <el-menu-item index="1-2">选3</el-menu-item>
         </el-menu-item-group>
         <el-menu-item-group title="分组3">
